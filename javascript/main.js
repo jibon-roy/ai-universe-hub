@@ -13,18 +13,22 @@ const getAiData = async (isShowAll) => {
 }
 
 const showContentHandaler = (allData, isShowAll) => {
-    console.log(isShowAll);
+    // console.log(isShowAll);
     // load id of show-container
     const showContainer = document.getElementById('show-container');
+    const buttonText = document.getElementById('see-more');
+
     let data;
     showContainer.textContent = '';
     if (!isShowAll) {
         data = allData.slice(0, 6);
-
     } else {
         data = allData;
+        buttonText.innerText = 'Show Less';
     }
-
+    buttonText.addEventListener('click', () => {
+        data = allData.slice(0, 6);
+    })
     data.forEach(element => {
 
         const items = document.createElement('div');
@@ -44,7 +48,7 @@ const showContentHandaler = (allData, isShowAll) => {
                 <h3 class="text-xl font-bold">${element?.name}</h3>
                 <date class="text-[#585858] font-medium my-5 gap-2"><i class="fa-regular fa-calendar-days"></i> ${element?.published_in}</date>
                 </div>
-                <button class="rounded-full h-10 w-10 text-[#EB5757] p-2 bg-[#FEF7F7] active:text-[#c34848] active:bg-[#e0dada]"><i class="fa-solid fa-arrow-right"></i></button>
+                <button onclick=showModalHandaler('${element?.id}') class="rounded-full h-10 w-10 text-[#EB5757] p-2 bg-[#FEF7F7] active:text-[#c34848] active:bg-[#e0dada]"><i class="fa-solid fa-arrow-right"></i></button>
                 </div>
             </div>
         </div>
@@ -54,6 +58,34 @@ const showContentHandaler = (allData, isShowAll) => {
     });
     loadingHandaler(false);
 }
+
+
+
+const showModalHandaler = (id) => {
+
+    const showModalHandaler = document.getElementById('show-modal');
+    const div = document.createElement('div');
+
+    div.innerHTML = `
+           <dialog id="my_modal_3" class="modal">
+            <form method="dialog" class="modal-box">             
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            <h3 class="font-bold text-lg">Hello!</h3>
+            <p class="py-4">Press ESC key or click on ✕ button to close</p>
+         </form>
+     </dialog>  
+    `;
+
+    showModalHandaler.appendChild(div);
+    const modal = document.getElementById('my_modal_3');
+    modal.showModal();
+    console.log(id);
+}
+
+
+
+
+
 
 const seeMore = () => {
     loadingHandaler(true);
