@@ -13,16 +13,19 @@ const getAiData = async (isShowAll) => {
 }
 
 const showContentHandaler = (allData, isShowAll) => {
+    console.log(isShowAll);
     // load id of show-container
     const showContainer = document.getElementById('show-container');
-
+    let data;
+    showContainer.textContent = '';
     if (!isShowAll) {
-        allData = allData.slice(0, 6);
+        data = allData.slice(0, 6);
+
     } else {
-        allData = allData;
+        data = allData;
     }
 
-    allData.forEach(element => {
+    data.forEach(element => {
 
         const items = document.createElement('div');
 
@@ -47,13 +50,14 @@ const showContentHandaler = (allData, isShowAll) => {
         </div>
         `;
         showContainer.appendChild(items);
-        // sortDate(element?.published_in);
+
     });
+    loadingHandaler(false);
 }
 
-const seeMore = (isShowAll) => {
+const seeMore = () => {
     loadingHandaler(true);
-    getAiData(isShowAll);
+    getAiData(true);
 }
 
 const loadingHandaler = (isLoad) => {
